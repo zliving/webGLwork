@@ -1,3 +1,9 @@
+/*
+Zachary Livingston
+Project 3
+4-4-2017
+CS 4395
+*/
 "use strict";
 
 var canvas;
