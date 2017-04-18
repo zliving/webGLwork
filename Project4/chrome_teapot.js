@@ -1,3 +1,9 @@
+/*
+Zachary Livingston
+CS4395 
+Project 4
+4/18/2017
+*/
 "use strict";
 
 var numDivisions = 3;

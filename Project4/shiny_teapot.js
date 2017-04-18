@@ -205,14 +205,20 @@ onload = function init()  {
     var lightDiffuse = vec4( 1.0, 1.0, 1.0, 1.0 );
     var lightSpecular = vec4( 1.0, 1.0, 1.0, 1.0 );
 
-    var materialAmbient = vec4( 1.0, 1.0, 1.0, 1.0 );
+    var materialAmbient = vec4( 1.0, 0.0, 1.0, 1.0 );
     var materialDiffuse = vec4( 1.0, 1.0, 1.0, 1.0 );
-    var materialSpecular = vec4( 1.0, 1.0, 1.0, 1.0 );
-    var materialShininess = 10.0;
+    var materialSpecular = vec4( 1.0, 0.8, 0.0, 1.0 );
+    var materialShininess = 1.0;
 
     var ambientProduct = mult(lightAmbient, materialAmbient);
     var diffuseProduct = mult(lightDiffuse, materialDiffuse);
     var specularProduct = mult(lightSpecular, materialSpecular);
+    
+    var image = document.getElementById("texImage");
+    
+
+    //configureTexture( image );
+    
 
     gl.uniform4fv( gl.getUniformLocation(program, "ambientProduct"),flatten(ambientProduct ));
     gl.uniform4fv( gl.getUniformLocation(program, "diffuseProduct"), flatten(diffuseProduct) );
@@ -223,6 +229,20 @@ onload = function init()  {
 
     render();
 }
+/*
+function configureTexture( image ) {
+    texture = gl.createTexture();
+    gl.bindTexture( gl.TEXTURE_2D, texture );
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGB,
+         gl.RGB, gl.UNSIGNED_BYTE, image );
+    gl.generateMipmap( gl.TEXTURE_2D );
+    gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,
+                      gl.NEAREST_MIPMAP_LINEAR );
+    gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST );
+
+    gl.uniform1i(gl.getUniformLocation(program, "texture"), 0);
+}*/
 
 var render = function(){
             gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -242,7 +262,7 @@ var render = function(){
         vec3(modelViewMatrix[2][0], modelViewMatrix[2][1], modelViewMatrix[2][2])
     ];
         gl.uniformMatrix3fv(normalMatrixLoc, false, flatten(normalMatrix) );
-
+        
             gl.drawArrays( gl.TRIANGLES, 0, index);
             //for(var i=0; i<index; i+=3) gl.drawArrays( gl.LINE_LOOP, i, 3 );
             requestAnimFrame(render);
